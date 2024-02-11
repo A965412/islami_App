@@ -17,11 +17,7 @@ class radio extends StatelessWidget {
           margin: EdgeInsets.all(2),
           child: Text(
             "أذاعه القرآن الكريم",
-            style: TextStyle(
-                color: Color(0xff242424),
-                fontSize: 25,
-                fontWeight: FontWeight.bold),
-          ),
+            style: Theme.of(context).textTheme.titleLarge),
         ),
         SizedBox(
           height: 30,

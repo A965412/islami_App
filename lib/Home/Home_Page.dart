@@ -1,10 +1,14 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:islami/Hadeth/Hadeth_tab.dart';
+import 'package:islami/Hadeth/hadethtab.dart';
 import 'package:islami/Quran/Quran_tab.dart';
 import 'package:islami/Radio/Radio_tab.dart';
 import 'package:islami/Sebha/Sebha_tab.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:islami/Setting/setting.dart';
+import 'package:islami/providers/app_config_provider.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   static String RouteName = "Home";
@@ -18,18 +22,26 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<Appcongif>(context);
     return Stack(
       children: [
-        Image(
-          image: AssetImage("assets/images/bg3.png"),
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.fill,
-        ),
+        provider.isDark()
+            ? Image(
+                image: AssetImage("assets/images/bg.png"),
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.fill,
+              )
+            : Image(
+                image: AssetImage("assets/images/bg3.png"),
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.fill,
+              ),
         Scaffold(
           appBar: AppBar(
             title: Text(
-              "Islami",
+              AppLocalizations.of(context)!.app_title,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -46,17 +58,20 @@ class _HomeState extends State<Home> {
               items: [
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage("assets/images/radio.png")),
-                    label: "Radio"),
+                    label: AppLocalizations.of(context)!.radio),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage("assets/images/sebha_blue.png")),
-                    label: "Sebha"),
+                    label: AppLocalizations.of(context)!.sebha),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage(
                         "assets/images/quran-quran-svgrepo-com.png")),
-                    label: "Hadeth"),
+                    label: AppLocalizations.of(context)!.hadeth),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage("assets/images/quran.png")),
-                    label: "Quran"),
+                    label: AppLocalizations.of(context)!.quran),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: AppLocalizations.of(context)!.settings),
               ],
             ),
           ),
@@ -66,10 +81,5 @@ class _HomeState extends State<Home> {
     );
   }
 
-  List<Widget> tabs = [
-    radio(),
-    Sebha(),
-    Hadeth(),
-    Quran(),
-  ];
+  List<Widget> tabs = [radio(), Sebha(), Hadeth(), Quran(), Setting_tab()];
 }
